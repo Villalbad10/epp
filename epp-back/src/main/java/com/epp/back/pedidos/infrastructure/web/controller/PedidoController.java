@@ -12,15 +12,14 @@ import com.epp.back.pedidos.domain.exception.RecursoNoEncontradoException;
 import com.epp.back.pedidos.domain.model.Pedido;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/pedidos")
+@RequestMapping("/api/v1/pedidos")
 @RequiredArgsConstructor
 public class PedidoController {
     
@@ -39,17 +38,7 @@ public class PedidoController {
     }
     
     @GetMapping("/list")
-    public ResponseEntity<PageResponse<PedidoResponse>> listarPedidos(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "fechaPedido") String sortBy,
-            @RequestParam(defaultValue = "DESC") String sortDir) {
-        
-        Sort sort = sortDir.equalsIgnoreCase("ASC") ? 
-                Sort.by(sortBy).ascending() : 
-                Sort.by(sortBy).descending();
-        
-        Pageable pageable = PageRequest.of(page, size, sort);
+    public ResponseEntity<PageResponse<PedidoResponse>> listarPedidos( Pageable pageable) {
         
         var pedidosPage = listarPedidosService.listarPedidos(pageable);
         PageResponse<PedidoResponse> response = pedidoMapper.toPageResponse(pedidosPage);

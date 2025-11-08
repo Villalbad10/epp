@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/epp")
+@RequestMapping("/api/v1/epp")
 @RequiredArgsConstructor
 public class EPPController {
     
     private final ListarEPPsService listarEPPsService;
     private final PedidoMapper pedidoMapper;
     
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<EPPResponse>> listarEPPs() {
         var epps = listarEPPsService.listarEPPs();
         List<EPPResponse> response = pedidoMapper.toEPPResponseList(epps);
