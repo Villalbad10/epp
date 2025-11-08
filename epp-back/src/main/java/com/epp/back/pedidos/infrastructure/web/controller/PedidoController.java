@@ -19,8 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/pedidos")
+@CrossOrigin("*")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/pedidos")
 public class PedidoController {
     
     private final CrearPedidoService crearPedidoService;
