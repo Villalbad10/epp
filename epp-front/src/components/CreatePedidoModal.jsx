@@ -236,7 +236,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle sx={{ pb: 1 }}>
         <Typography variant="h6" component="div" fontWeight="bold">
           Crear Nuevo Pedido
@@ -258,7 +258,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                 Información del Pedido
               </Typography>
               <Grid container spacing={2} sx={{ mt: 0.5 }}>
-                <Grid xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <FormControl fullWidth error={!!formErrors.empresaId}>
                     <InputLabel>Empresa *</InputLabel>
                     <Select
@@ -271,7 +271,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                     >
                       {empresas.map((empresa) => (
                         <MenuItem key={empresa.id} value={empresa.id}>
-                          {empresa.nombre} - {empresa.ruc}
+                          {empresa.nombre} - {empresa.nit}
                         </MenuItem>
                       ))}
                     </Select>
@@ -281,7 +281,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid xs={12} sm={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <FormControl fullWidth error={!!formErrors.areaId}>
                     <InputLabel>Área *</InputLabel>
                     <Select
@@ -304,7 +304,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid xs={12} sm={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <FormControl fullWidth error={!!formErrors.productoQuimicoId}>
                     <InputLabel>Producto Químico *</InputLabel>
                     <Select
@@ -327,7 +327,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <TextField
                     fullWidth
                     label="Observaciones"
@@ -351,7 +351,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
               
               {/* Formulario para agregar items */}
               <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
-                <Grid xs={12} sm={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <FormControl fullWidth>
                     <InputLabel>Seleccionar EPP</InputLabel>
                     <Select
@@ -373,7 +373,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <TextField
                     fullWidth
                     label="Cantidad"
@@ -386,7 +386,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   />
                 </Grid>
 
-                <Grid xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <Button
                     fullWidth
                     variant="contained"

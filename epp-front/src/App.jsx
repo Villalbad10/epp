@@ -236,7 +236,7 @@ function App() {
                             {pedido.empresa?.nombre || '-'}
                             <br />
                             <Typography variant="caption" color="text.secondary">
-                              RUC: {pedido.empresa?.ruc || '-'}
+                              NIT: {pedido.empresa?.nit || '-'}
                             </Typography>
                           </TableCell>
                           <TableCell>{pedido.area?.nombre || '-'}</TableCell>

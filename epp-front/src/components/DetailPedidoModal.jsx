@@ -113,7 +113,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
             {/* Header con información principal del pedido - horizontal */}
             <Paper variant="outlined" sx={{ p: 1.5, bgcolor: 'background.default' }}>
               <Grid container spacing={2}>
-                <Grid item xs={6} sm={3}>
+                <Grid size={{ xs: 6, sm: 3 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                     Número de Pedido
                   </Typography>
@@ -121,7 +121,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                     {pedido.numeroPedido}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid size={{ xs: 6, sm: 3 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                     Fecha
                   </Typography>
@@ -129,7 +129,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                     {formatDate(pedido.fechaPedido)}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid size={{ xs: 6, sm: 3 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                     Total
                   </Typography>
@@ -137,7 +137,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                     S/ {pedido.total?.toFixed(2) || '0.00'}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid size={{ xs: 6, sm: 3 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                     Items
                   </Typography>
@@ -158,7 +158,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
               </Stack>
               <Divider sx={{ mb: 1.5 }} />
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                     Razón Social
                   </Typography>
@@ -166,16 +166,16 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                     {pedido.empresa?.nombre || '-'}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                    RUC
+                    NIT
                   </Typography>
                   <Typography variant="body2">
-                    {pedido.empresa?.ruc || '-'}
+                    {pedido.empresa?.nit || '-'}
                   </Typography>
                 </Grid>
                 {pedido.empresa?.direccion && (
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                       Dirección
                     </Typography>
@@ -185,7 +185,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                   </Grid>
                 )}
                 {pedido.empresa?.telefono && (
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                       Teléfono
                     </Typography>
@@ -195,7 +195,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                   </Grid>
                 )}
                 {pedido.empresa?.email && (
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                       Email
                     </Typography>
@@ -211,7 +211,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
             <Paper variant="outlined" sx={{ p: 1.5 }}>
               <Grid container spacing={2}>
                 {/* Área */}
-                <Grid item xs={12} sm={4}>
+                <Grid size={{ xs: 12, sm: 4 }}>
                   <Stack direction="row" spacing={0.5} alignItems="center" mb={0.5}>
                     <LocationIcon color="primary" fontSize="small" />
                     <Typography variant="caption" fontWeight="bold" color="text.secondary">
@@ -229,7 +229,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
                 </Grid>
 
                 {/* Producto Químico */}
-                <Grid item xs={12} sm={4}>
+                <Grid size={{ xs: 12, sm: 4 }}>
                   <Stack direction="row" spacing={0.5} alignItems="center" mb={0.5}>
                     <ScienceIcon color="primary" fontSize="small" />
                     <Typography variant="caption" fontWeight="bold" color="text.secondary">
@@ -246,7 +246,7 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
 
                 {/* Observaciones */}
                 {pedido.observaciones && (
-                  <Grid item xs={12} sm={4}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
                     <Typography variant="caption" fontWeight="bold" color="text.secondary" display="block" gutterBottom>
                       OBSERVACIONES
                     </Typography>
