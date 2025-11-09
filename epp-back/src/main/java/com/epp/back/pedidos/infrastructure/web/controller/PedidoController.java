@@ -30,7 +30,7 @@ public class PedidoController {
     private final PedidoMapper pedidoMapper;
     private final PedidoRequestMapper pedidoRequestMapper;
     
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<PedidoResponse> crearPedido(@Valid @RequestBody PedidoRequest request) {
         Pedido pedidoDomain = pedidoRequestMapper.toDomain(request);
         Pedido pedidoCreado = crearPedidoService.crearPedido(pedidoDomain);
