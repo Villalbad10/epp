@@ -149,12 +149,12 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
     try {
       setLoadingForm(true)
       const payload = {
-        empresa: { id: parseInt(formData.empresaId) },
-        area: { id: parseInt(formData.areaId) },
-        productoQuimico: { id: parseInt(formData.productoQuimicoId) },
-        observaciones: formData.observaciones,
+        empresaId: parseInt(formData.empresaId),
+        areaId: parseInt(formData.areaId),
+        productoQuimicoId: parseInt(formData.productoQuimicoId),
+        observaciones: formData.observaciones || null,
         items: formData.items.map((item) => ({
-          epp: { id: parseInt(item.eppId) },
+          eppId: parseInt(item.eppId),
           cantidad: parseInt(item.cantidad),
         })),
       }
@@ -258,7 +258,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                 Información del Pedido
               </Typography>
               <Grid container spacing={2} sx={{ mt: 0.5 }}>
-                <Grid item xs={12}>
+                <Grid xs={12}>
                   <FormControl fullWidth error={!!formErrors.empresaId}>
                     <InputLabel>Empresa *</InputLabel>
                     <Select
@@ -281,7 +281,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid xs={12} sm={12} md={6}>
                   <FormControl fullWidth error={!!formErrors.areaId}>
                     <InputLabel>Área *</InputLabel>
                     <Select
@@ -304,7 +304,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid xs={12} sm={12} md={6}>
                   <FormControl fullWidth error={!!formErrors.productoQuimicoId}>
                     <InputLabel>Producto Químico *</InputLabel>
                     <Select
@@ -327,7 +327,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid xs={12}>
                   <TextField
                     fullWidth
                     label="Observaciones"
@@ -346,12 +346,12 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
             {/* Sección: Items del Pedido */}
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Items del Pedido
+                EPPs del Pedido
               </Typography>
               
               {/* Formulario para agregar items */}
               <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid xs={12} sm={12} md={6}>
                   <FormControl fullWidth>
                     <InputLabel>Seleccionar EPP</InputLabel>
                     <Select
@@ -373,7 +373,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid xs={12} sm={6} md={3}>
                   <TextField
                     fullWidth
                     label="Cantidad"
@@ -386,7 +386,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid xs={12} sm={6} md={3}>
                   <Button
                     fullWidth
                     variant="contained"
