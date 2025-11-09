@@ -22,7 +22,6 @@ import {
   CardContent,
   Button,
   IconButton,
-  Snackbar,
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -30,6 +29,8 @@ import {
 } from '@mui/icons-material'
 import CreatePedidoModal from './components/CreatePedidoModal'
 import DetailPedidoModal from './components/DetailPedidoModal'
+import SnackbarNotification from './components/SnackbarNotification'
+import { SnackbarProvider, useSnackbar } from './context/SnackbarContext'
 import './App.css'
 
 const API_BASE_URL = 'http://127.0.0.1:8080/api/v1'
@@ -40,7 +41,7 @@ const theme = createTheme({
   },
 })
 
-function App() {
+function AppContent() {
   // Estados principales
   const [pedidos, setPedidos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -54,26 +55,8 @@ function App() {
   const [openDetailModal, setOpenDetailModal] = useState(false)
   const [selectedPedidoId, setSelectedPedidoId] = useState(null)
 
-  // Estados para Snackbar
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'success',
-  })
-
-  // Función para mostrar snackbar
-  const showSnackbar = (message, severity = 'success') => {
-    setSnackbar({
-      open: true,
-      message,
-      severity,
-    })
-  }
-
-  // Función para cerrar snackbar
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false })
-  }
+  // Hook para snackbar
+  const { showSnackbar } = useSnackbar()
 
   // Fetch pedidos
   const fetchPedidos = useCallback(async (pageNum, size) => {
@@ -176,8 +159,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography variant="h4" component="h1">
@@ -300,23 +282,19 @@ function App() {
         onClose={handleCloseDetailModal}
         pedidoId={selectedPedidoId}
       />
+    </>
+  )
+}
 
-      {/* Snackbar para feedback */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </ThemeProvider>
+function App() {
+  return (
+    <SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppContent />
+        <SnackbarNotification />
+      </ThemeProvider>
+    </SnackbarProvider>
   )
 }
 
