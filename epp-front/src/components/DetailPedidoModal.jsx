@@ -258,10 +258,10 @@ const DetailPedidoModal = ({ open, onClose, pedidoId }) => {
               </Grid>
             </Paper>
 
-            {/* Items del Pedido */}
+            {/* EPPs del Pedido */}
             <Paper variant="outlined" sx={{ p: 1.5 }}>
               <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                Items del Pedido
+                EPPs del Pedido
               </Typography>
               <TableContainer sx={{ mt: 1 }}>
                 <Table size="small">

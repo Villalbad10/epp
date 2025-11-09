@@ -23,7 +23,7 @@ public class EmpresaEntity {
     private String nombre;
     
     @Column(unique = true, nullable = false)
-    private String ruc;
+    private String nit;
     
     private String direccion;
     private String telefono;

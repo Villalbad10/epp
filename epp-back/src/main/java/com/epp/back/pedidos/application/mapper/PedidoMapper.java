@@ -108,7 +108,7 @@ public class PedidoMapper {
         return EmpresaResponse.builder()
                 .id(empresa.getId())
                 .nombre(empresa.getNombre())
-                .ruc(empresa.getRuc())
+                .nit(empresa.getNit())
                 .direccion(empresa.getDireccion())
                 .telefono(empresa.getTelefono())
                 .email(empresa.getEmail())

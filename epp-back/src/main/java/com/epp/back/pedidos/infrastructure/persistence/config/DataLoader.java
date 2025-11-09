@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
         // Crear empresas
         EmpresaEntity empresa1 = EmpresaEntity.builder()
                 .nombre("Química Industrial S.A.")
-                .ruc("20123456789")
+                .nit("900123456-7")
                 .direccion("Av. Industrial 123")
                 .telefono("987654321")
                 .email("contacto@quimicaindustrial.com")
@@ -49,7 +49,7 @@ public class DataLoader implements CommandLineRunner {
         
         EmpresaEntity empresa2 = EmpresaEntity.builder()
                 .nombre("Productos Químicos del Norte")
-                .ruc("20987654321")
+                .nit("900987654-3")
                 .direccion("Av. Norte 456")
                 .telefono("987654322")
                 .email("info@quimicosnorte.com")

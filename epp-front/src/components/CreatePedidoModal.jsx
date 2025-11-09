@@ -343,7 +343,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
               </Grid>
             </Paper>
 
-            {/* Sección: Items del Pedido */}
+            {/* Sección: EPPs del Pedido */}
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                 EPPs del Pedido
