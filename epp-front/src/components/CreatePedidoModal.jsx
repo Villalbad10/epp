@@ -13,7 +13,6 @@ import {
   InputLabel,
   IconButton,
   Grid,
-  Divider,
   Typography,
   Table,
   TableBody,
@@ -24,6 +23,8 @@ import {
   Paper,
   FormHelperText,
   CircularProgress,
+  Stack,
+  Box,
 } from '@mui/material'
 import {
   Delete as DeleteIcon,
@@ -61,7 +62,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   // Fetch empresas
   const fetchEmpresas = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/empresas`)
+      const response = await axios.get(`${API_BASE_URL}/empresa/list`)
       setEmpresas(Array.isArray(response.data) ? response.data : response.data.content || [])
     } catch (err) {
       console.error('Error fetching empresas:', err)
@@ -72,7 +73,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   // Fetch áreas
   const fetchAreas = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/areas`)
+      const response = await axios.get(`${API_BASE_URL}/area/list`)
       setAreas(Array.isArray(response.data) ? response.data : response.data.content || [])
     } catch (err) {
       console.error('Error fetching areas:', err)
@@ -83,7 +84,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   // Fetch productos químicos
   const fetchProductosQuimicos = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/productos-quimicos`)
+      const response = await axios.get(`${API_BASE_URL}/producto-quimico/list`)
       setProductosQuimicos(Array.isArray(response.data) ? response.data : response.data.content || [])
     } catch (err) {
       console.error('Error fetching productos quimicos:', err)
@@ -94,7 +95,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   // Fetch EPPs
   const fetchEpps = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/epp`)
+      const response = await axios.get(`${API_BASE_URL}/epp/list`)
       setEpps(Array.isArray(response.data) ? response.data : response.data.content || [])
     } catch (err) {
       console.error('Error fetching EPPs:', err)
@@ -158,7 +159,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
         })),
       }
 
-      await axios.post(`${API_BASE_URL}/pedidos`, payload)
+      await axios.post(`${API_BASE_URL}/pedidos/save`, payload)
       onSuccess('Pedido creado exitosamente')
       handleClose()
     } catch (err) {
@@ -235,181 +236,214 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle>Crear Nuevo Pedido</DialogTitle>
-      <DialogContent>
+    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+      <DialogTitle sx={{ pb: 1 }}>
+        <Typography variant="h6" component="div" fontWeight="bold">
+          Crear Nuevo Pedido
+        </Typography>
+      </DialogTitle>
+      <DialogContent dividers sx={{ pt: 2 }}>
         {loadingData ? (
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sx={{ textAlign: 'center', py: 4 }}>
-              <CircularProgress />
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                Cargando datos...
-              </Typography>
-            </Grid>
-          </Grid>
+          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={4}>
+            <CircularProgress />
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Cargando datos...
+            </Typography>
+          </Box>
         ) : (
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <FormControl fullWidth error={!!formErrors.empresaId}>
-                <InputLabel>Empresa *</InputLabel>
-                <Select
-                  value={formData.empresaId}
-                  label="Empresa *"
-                  onChange={(e) =>
-                    setFormData({ ...formData, empresaId: e.target.value })
-                  }
-                >
-                  {empresas.map((empresa) => (
-                    <MenuItem key={empresa.id} value={empresa.id}>
-                      {empresa.nombre} - {empresa.ruc}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {formErrors.empresaId && (
-                  <FormHelperText>{formErrors.empresaId}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
+          <Stack spacing={3}>
+            {/* Sección: Información del Pedido */}
+            <Paper variant="outlined" sx={{ p: 2, bgcolor: 'background.default' }}>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                Información del Pedido
+              </Typography>
+              <Grid container spacing={2} sx={{ mt: 0.5 }}>
+                <Grid item xs={12}>
+                  <FormControl fullWidth error={!!formErrors.empresaId}>
+                    <InputLabel>Empresa *</InputLabel>
+                    <Select
+                      value={formData.empresaId}
+                      label="Empresa *"
+                      onChange={(e) =>
+                        setFormData({ ...formData, empresaId: e.target.value })
+                      }
+                      sx={{ minWidth: 200 }}
+                    >
+                      {empresas.map((empresa) => (
+                        <MenuItem key={empresa.id} value={empresa.id}>
+                          {empresa.nombre} - {empresa.ruc}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {formErrors.empresaId && (
+                      <FormHelperText>{formErrors.empresaId}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth error={!!formErrors.areaId}>
-                <InputLabel>Área *</InputLabel>
-                <Select
-                  value={formData.areaId}
-                  label="Área *"
-                  onChange={(e) =>
-                    setFormData({ ...formData, areaId: e.target.value })
-                  }
-                >
-                  {areas.map((area) => (
-                    <MenuItem key={area.id} value={area.id}>
-                      {area.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {formErrors.areaId && (
-                  <FormHelperText>{formErrors.areaId}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <FormControl fullWidth error={!!formErrors.areaId}>
+                    <InputLabel>Área *</InputLabel>
+                    <Select
+                      value={formData.areaId}
+                      label="Área *"
+                      onChange={(e) =>
+                        setFormData({ ...formData, areaId: e.target.value })
+                      }
+                      sx={{ minWidth: 200 }}
+                    >
+                      {areas.map((area) => (
+                        <MenuItem key={area.id} value={area.id}>
+                          {area.nombre}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {formErrors.areaId && (
+                      <FormHelperText>{formErrors.areaId}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth error={!!formErrors.productoQuimicoId}>
-                <InputLabel>Producto Químico *</InputLabel>
-                <Select
-                  value={formData.productoQuimicoId}
-                  label="Producto Químico *"
-                  onChange={(e) =>
-                    setFormData({ ...formData, productoQuimicoId: e.target.value })
-                  }
-                >
-                  {productosQuimicos.map((producto) => (
-                    <MenuItem key={producto.id} value={producto.id}>
-                      {producto.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {formErrors.productoQuimicoId && (
-                  <FormHelperText>{formErrors.productoQuimicoId}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <FormControl fullWidth error={!!formErrors.productoQuimicoId}>
+                    <InputLabel>Producto Químico *</InputLabel>
+                    <Select
+                      value={formData.productoQuimicoId}
+                      label="Producto Químico *"
+                      onChange={(e) =>
+                        setFormData({ ...formData, productoQuimicoId: e.target.value })
+                      }
+                      sx={{ minWidth: 200 }}
+                    >
+                      {productosQuimicos.map((producto) => (
+                        <MenuItem key={producto.id} value={producto.id}>
+                          {producto.nombre}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {formErrors.productoQuimicoId && (
+                      <FormHelperText>{formErrors.productoQuimicoId}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Observaciones"
-                multiline
-                rows={3}
-                value={formData.observaciones}
-                onChange={(e) =>
-                  setFormData({ ...formData, observaciones: e.target.value })
-                }
-              />
-            </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Observaciones"
+                    multiline
+                    rows={2}
+                    value={formData.observaciones}
+                    onChange={(e) =>
+                      setFormData({ ...formData, observaciones: e.target.value })
+                    }
+                    placeholder="Ingrese observaciones adicionales (opcional)"
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
 
-            <Grid item xs={12}>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6" gutterBottom>
+            {/* Sección: Items del Pedido */}
+            <Paper variant="outlined" sx={{ p: 2 }}>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                 Items del Pedido
               </Typography>
-            </Grid>
+              
+              {/* Formulario para agregar items */}
+              <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <FormControl fullWidth>
+                    <InputLabel>Seleccionar EPP</InputLabel>
+                    <Select
+                      value={newItem.eppId}
+                      label="Seleccionar EPP"
+                      onChange={(e) =>
+                        setNewItem({ ...newItem, eppId: e.target.value })
+                      }
+                      sx={{ minWidth: 200 }}
+                    >
+                      {epps
+                        .filter((epp) => epp.activo !== false)
+                        .map((epp) => (
+                          <MenuItem key={epp.id} value={epp.id}>
+                            {epp.nombre} - S/ {epp.precioUnitario?.toFixed(2)}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
 
-            <Grid item xs={12} sm={5}>
-              <FormControl fullWidth>
-                <InputLabel>EPP</InputLabel>
-                <Select
-                  value={newItem.eppId}
-                  label="EPP"
-                  onChange={(e) =>
-                    setNewItem({ ...newItem, eppId: e.target.value })
-                  }
-                >
-                  {epps
-                    .filter((epp) => epp.activo !== false)
-                    .map((epp) => (
-                      <MenuItem key={epp.id} value={epp.id}>
-                        {epp.nombre} - S/ {epp.precioUnitario?.toFixed(2)}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <TextField
+                    fullWidth
+                    label="Cantidad"
+                    type="number"
+                    value={newItem.cantidad}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, cantidad: e.target.value })
+                    }
+                    inputProps={{ min: 1 }}
+                  />
+                </Grid>
 
-            <Grid item xs={12} sm={4}>
-              <TextField
-                fullWidth
-                label="Cantidad"
-                type="number"
-                value={newItem.cantidad}
-                onChange={(e) =>
-                  setNewItem({ ...newItem, cantidad: e.target.value })
-                }
-                inputProps={{ min: 1 }}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <Button
-                fullWidth
-                variant="outlined"
-                startIcon={<AddCircleIcon />}
-                onClick={handleAddItem}
-                sx={{ height: '56px' }}
-              >
-                Agregar
-              </Button>
-            </Grid>
-
-            {formErrors.items && (
-              <Grid item xs={12}>
-                <FormHelperText error>{formErrors.items}</FormHelperText>
+                <Grid item xs={12} sm={6} md={3}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    startIcon={<AddCircleIcon />}
+                    onClick={handleAddItem}
+                    sx={{ height: '56px' }}
+                    disabled={!newItem.eppId || !newItem.cantidad}
+                  >
+                    Agregar
+                  </Button>
+                </Grid>
               </Grid>
-            )}
 
-            {formData.items.length > 0 && (
-              <Grid item xs={12}>
-                <TableContainer component={Paper} variant="outlined">
+              {formErrors.items && (
+                <FormHelperText error sx={{ mb: 1 }}>
+                  {formErrors.items}
+                </FormHelperText>
+              )}
+
+              {/* Tabla de items agregados */}
+              {formData.items.length > 0 ? (
+                <TableContainer>
                   <Table size="small">
                     <TableHead>
-                      <TableRow>
+                      <TableRow sx={{ bgcolor: 'action.hover' }}>
                         <TableCell><strong>EPP</strong></TableCell>
                         <TableCell align="right"><strong>Cantidad</strong></TableCell>
                         <TableCell align="right"><strong>Precio Unitario</strong></TableCell>
                         <TableCell align="right"><strong>Subtotal</strong></TableCell>
-                        <TableCell align="center"><strong>Acción</strong></TableCell>
+                        <TableCell align="center" width={80}><strong>Acción</strong></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {formData.items.map((item, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{item.eppNombre}</TableCell>
-                          <TableCell align="right">{item.cantidad}</TableCell>
-                          <TableCell align="right">
-                            S/ {item.precioUnitario?.toFixed(2)}
+                        <TableRow 
+                          key={index}
+                          sx={{ '&:hover': { bgcolor: 'action.hover' } }}
+                        >
+                          <TableCell>
+                            <Typography variant="body2" fontWeight="medium">
+                              {item.eppNombre}
+                            </Typography>
                           </TableCell>
                           <TableCell align="right">
-                            S/ {item.subtotal?.toFixed(2)}
+                            <Typography variant="body2">
+                              {item.cantidad}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Typography variant="body2">
+                              S/ {item.precioUnitario?.toFixed(2)}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Typography variant="body2" fontWeight="medium">
+                              S/ {item.subtotal?.toFixed(2)}
+                            </Typography>
                           </TableCell>
                           <TableCell align="center">
                             <IconButton
@@ -417,29 +451,48 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
                               size="small"
                               onClick={() => handleRemoveItem(index)}
                             >
-                              <DeleteIcon />
+                              <DeleteIcon fontSize="small" />
                             </IconButton>
                           </TableCell>
                         </TableRow>
                       ))}
-                      <TableRow>
+                      <TableRow sx={{ bgcolor: 'action.selected', '& td': { borderTop: 2, borderColor: 'divider', py: 1.5 } }}>
                         <TableCell colSpan={3} align="right">
-                          <strong>Total:</strong>
+                          <Typography variant="subtitle1" fontWeight="bold">
+                            Total:
+                          </Typography>
                         </TableCell>
                         <TableCell align="right">
-                          <strong>S/ {calculateTotal().toFixed(2)}</strong>
+                          <Typography variant="subtitle1" fontWeight="bold" color="primary">
+                            S/ {calculateTotal().toFixed(2)}
+                          </Typography>
                         </TableCell>
                         <TableCell />
                       </TableRow>
                     </TableBody>
                   </Table>
                 </TableContainer>
-              </Grid>
-            )}
-          </Grid>
+              ) : (
+                <Box 
+                  sx={{ 
+                    p: 3, 
+                    textAlign: 'center', 
+                    bgcolor: 'action.hover', 
+                    borderRadius: 1,
+                    border: '1px dashed',
+                    borderColor: 'divider'
+                  }}
+                >
+                  <Typography variant="body2" color="text.secondary">
+                    No hay items agregados. Seleccione un EPP, ingrese la cantidad y haga clic en "Agregar".
+                  </Typography>
+                </Box>
+              )}
+            </Paper>
+          </Stack>
         )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ p: 2, gap: 1 }}>
         <Button onClick={handleClose} disabled={loadingForm}>
           Cancelar
         </Button>
@@ -447,6 +500,7 @@ const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
           onClick={handleCreatePedido}
           variant="contained"
           disabled={loadingForm || loadingData}
+          size="large"
         >
           {loadingForm ? <CircularProgress size={24} /> : 'Crear Pedido'}
         </Button>
