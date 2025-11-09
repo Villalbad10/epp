@@ -8,7 +8,9 @@ import com.epp.back.pedidos.infrastructure.persistence.repository.EmpresaJpaRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +18,13 @@ public class EmpresaRepositoryAdapter implements EmpresaRepositoryPort {
     
     private final EmpresaJpaRepository jpaRepository;
     private final EntityMapper mapper;
+    
+    @Override
+    public List<Empresa> listarTodos() {
+        return jpaRepository.findAll().stream()
+                .map(mapper::toEmpresaDomain)
+                .collect(Collectors.toList());
+    }
     
     @Override
     public Optional<Empresa> buscarPorId(Long id) {

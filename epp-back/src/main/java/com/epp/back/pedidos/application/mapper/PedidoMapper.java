@@ -139,5 +139,32 @@ public class PedidoMapper {
                 .descripcion(productoQuimico.getDescripcion())
                 .build();
     }
+    
+    public List<EmpresaResponse> toEmpresaResponseList(List<Empresa> empresas) {
+        if (empresas == null) {
+            return List.of();
+        }
+        return empresas.stream()
+                .map(this::toEmpresaResponse)
+                .collect(Collectors.toList());
+    }
+    
+    public List<AreaResponse> toAreaResponseList(List<Area> areas) {
+        if (areas == null) {
+            return List.of();
+        }
+        return areas.stream()
+                .map(this::toAreaResponse)
+                .collect(Collectors.toList());
+    }
+    
+    public List<ProductoQuimicoResponse> toProductoQuimicoResponseList(List<ProductoQuimico> productosQuimicos) {
+        if (productosQuimicos == null) {
+            return List.of();
+        }
+        return productosQuimicos.stream()
+                .map(this::toProductoQuimicoResponse)
+                .collect(Collectors.toList());
+    }
 }
 

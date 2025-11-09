@@ -8,7 +8,9 @@ import com.epp.back.pedidos.infrastructure.persistence.repository.AreaJpaReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +18,13 @@ public class AreaRepositoryAdapter implements AreaRepositoryPort {
     
     private final AreaJpaRepository jpaRepository;
     private final EntityMapper mapper;
+    
+    @Override
+    public List<Area> listarTodos() {
+        return jpaRepository.findAll().stream()
+                .map(mapper::toAreaDomain)
+                .collect(Collectors.toList());
+    }
     
     @Override
     public Optional<Area> buscarPorId(Long id) {
