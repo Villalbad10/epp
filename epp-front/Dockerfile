@@ -1,5 +1,4 @@
-# Stage 1: Build
-FROM node:20-alpine AS build
+FROM node:20-alpine
 WORKDIR /app
 
 # Copy package files
@@ -14,27 +13,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
+# Expose port (Vite preview default port)
+EXPOSE 4173
 
-# Copy built assets from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy custom nginx configuration (optional)
-# If you need to configure API proxy or other nginx settings
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
-
-# Expose port
-EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start vite preview server
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
 
