@@ -31,9 +31,8 @@ import CreatePedidoModal from './components/CreatePedidoModal'
 import DetailPedidoModal from './components/DetailPedidoModal'
 import SnackbarNotification from './components/SnackbarNotification'
 import { SnackbarProvider, useSnackbar } from './context/SnackbarContext'
+import { API_BASE_URL } from './config/api'
 import './App.css'
-
-const API_BASE_URL = 'http://127.0.0.1:8080/api/v1'
 
 const theme = createTheme({
   palette: {

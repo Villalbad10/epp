@@ -30,8 +30,7 @@ import {
   Delete as DeleteIcon,
   AddCircle as AddCircleIcon,
 } from '@mui/icons-material'
-
-const API_BASE_URL = 'http://127.0.0.1:8080/api/v1'
+import { API_BASE_URL } from '../config/api'
 
 const CreatePedidoModal = ({ open, onClose, onSuccess, onError }) => {
   // Estados para formulario
