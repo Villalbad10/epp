@@ -165,16 +165,6 @@ docker run -p 4173:4173 \
 - El frontend se conecta al backend mediante la URL configurada en `VITE_API_URL`
 - Los datos de PostgreSQL se persisten en el volumen `db_data` cuando se usa Docker Compose
 
-## 🧪 Testing
-
-```bash
-# Backend
-cd epp-back
-./mvnw test
-
-# Frontend
-cd epp-front
-npm run lint
 ```
 
 ## 📚 Arquitectura
